@@ -60,6 +60,7 @@ class Model:
             if v not in parziale:
                 neigh.append(v)
 
+
         return neigh
 
 
