@@ -59,6 +59,7 @@ class Model:
         for v in vicini:
             if v not in parziale:
                 neigh.append(v)
+
         return neigh
 
 
