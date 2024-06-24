@@ -38,30 +38,34 @@ class Model:
 
     def ricorsione(self, parziale, n):
         vicini = list(self.graph.neighbors(n))
-        if not self.check(vicini, parziale, n):
+        viciniAccettabili = self.cercaAccettabili(vicini, n, parziale)
+        if len(viciniAccettabili) == 0:
             lunghezza = self.calcolaLunghezza(parziale)
             if lunghezza > self.lunghezzaMax:
+                print(lunghezza, self.solBest)
                 self.solBest = copy.deepcopy(parziale)
                 self.lunghezzaMax = lunghezza
-        for v in vicini:
-            if self.vincoli(parziale, n, v):
-                parziale.append(v)
-                print(parziale)
-                self.ricorsione(parziale, v)
-                parziale.pop()
+                return
+        for v in viciniAccettabili:
+            parziale.append(v)
+            #print(parziale)
+            self.ricorsione(parziale, v)
+            parziale.pop()
         if len(parziale) == 1:
             return
 
+    def cercaAccettabili(self, vicini, n, parziale):
+        neigh = []
+        for v in vicini:
+            boolean = False
+            for i in range(len(parziale)-1):
+                if {n,v} == {parziale[i], parziale[i+1]}:
+                    boolean = True
+            if not boolean:
+                neigh.append(v)
+        return neigh
 
 
-    def check(self, vicini, parziale, nodo):
-        return any(self.vincoli(parziale, nodo, v) for v in vicini)
-
-    def vincoli(self, parziale, nodo, vicino):
-        for i in range(len(parziale)-1):
-            if {nodo, vicino} == {parziale[i], parziale[i+1]}:
-                return False
-        return True
 
     def calcolaLunghezza(self, parziale):
         lunghezza = 0
