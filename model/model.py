@@ -57,11 +57,7 @@ class Model:
     def cercaAccettabili(self, vicini, n, parziale):
         neigh = []
         for v in vicini:
-            boolean = False
-            for i in range(len(parziale)-1):
-                if {n,v} == {parziale[i], parziale[i+1]}:
-                    boolean = True
-            if not boolean:
+            if v not in parziale:
                 neigh.append(v)
         return neigh
 
