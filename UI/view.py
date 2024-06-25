@@ -41,8 +41,8 @@ class View(ft.UserControl):
         #row3
         self.txtResult = ft.ListView(auto_scroll=True)
         self._page.controls.append(self.txtResult)
-
         self._controller.buildGraph()
+
         self._page.update()
     @property
     def controller(self):
